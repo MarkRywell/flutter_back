@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('details');
+            $table->foreignId('userId')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('sold');
             $table->timestamps();
         });
     }

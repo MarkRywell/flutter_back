@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     use HasFactory;
+
+    public function user(){
+        return $this->belongsToMany(User::class);
+    }
+
+    protected $fillable = [
+        'name',
+        'details',
+        'userId',
+        'sold'
+    ];
+
+    protected $primaryKey = 'id';
 }
