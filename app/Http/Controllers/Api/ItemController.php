@@ -28,7 +28,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $response
     }
 
     /**
@@ -37,9 +37,9 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function show(Item $item)
+    public function show($userId)
     {
-        return ItemResource::collection(DB::table('items')->get())
+        return ItemResource::collection(DB::table('items')->where('userId', $userId)->get());
     }
 
     /**
