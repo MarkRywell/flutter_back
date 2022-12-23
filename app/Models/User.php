@@ -43,7 +43,6 @@ class User extends Authenticatable
 
     protected $primaryKey = 'id';
 
-
     /**
      * The attributes that should be cast.
      *

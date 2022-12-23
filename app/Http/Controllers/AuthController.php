@@ -79,6 +79,7 @@ class AuthController extends Controller
         ];
 
         return response($responseData, 200);
-
     }
+
+    
 }

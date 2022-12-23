@@ -27,8 +27,31 @@ class ItemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $response
+    {   
+        $responseData = [
+            'status' => 'fail',
+            'message' => '',
+            'data' => null
+        ];
+
+        $item = Item::create([
+            'name' => $request['name'],
+            'details' => $request['details'],
+            'userId' => $request['userId'],
+            'sold' => $request['sold'],
+            'picture' => $request['picture'],
+        ]);
+        
+        if ($item == null)
+        {
+            $responseData['message'] = 'Unsuccessful Add Item';
+            return response()->json($responseData, 400);
+        }
+
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Item Added Successfully';
+
+        return response()->json($responseData, 201);
     }
 
     /**
