@@ -17,7 +17,9 @@ class Item extends Model
         'name',
         'details',
         'userId',
-        'sold'
+        'sold',
+        'picture',
+        'sold_to'
     ];
 
     protected $primaryKey = 'id';

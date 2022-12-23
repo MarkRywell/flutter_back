@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('userId')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('sold');
             $table->string('picture');
+            $table->string('sold_to')->nullable();
             $table->timestamps();
         });
     }
