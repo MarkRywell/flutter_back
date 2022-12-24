@@ -20,6 +20,11 @@ class ItemController extends Controller
         return ItemResource::collection(DB::table('items')->get());
     }
 
+    public function fetchOtherItems(int $id)
+    {
+        return ItemResource::collection(DB::table('items')->whereNot('userId', $id)->get());
+    }
+
     /**
      * Store a newly created resource in storage.
      *

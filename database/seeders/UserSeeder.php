@@ -21,7 +21,19 @@ class UserSeeder extends Seeder
                 'address' => 'Cagayan de Oro City',
                 'email' => 'markgaje43@gmail.com',
                 'password' => bcrypt('mark123')
-            ]
+            ],
+            [
+                'name' => 'Mark Bontia',
+                'address' => 'Gingoog Misamis Oriental',
+                'email' => 'markB@gmail.com',
+                'password' => bcrypt('mark123')
+            ],
+            [
+                'name' => 'John Ray Canete',
+                'address' => 'General Santos City',
+                'email' => 'janri@gmail.com',
+                'password' => bcrypt('janri123')
+            ],
         ];
 
         DB::table('users')->insert($users);
