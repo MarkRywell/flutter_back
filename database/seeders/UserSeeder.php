@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
                 'name' => 'Mark Gaje',
                 'address' => 'Cagayan de Oro City',
                 'email' => 'markgaje43@gmail.com',
-                'password' => 'mark123'
+                'password' => bcrypt('mark123')
             ]
         ];
 
