@@ -22,7 +22,7 @@ class ItemController extends Controller
 
     public function fetchOtherItems(int $id)
     {
-        return ItemResource::collection(DB::table('items')->whereNot('userId', $id)->get());
+        return (DB::table('items')->whereNot('userId', $id)->get());
     }
 
     /**
