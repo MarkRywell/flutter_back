@@ -87,7 +87,7 @@ class ItemController extends Controller
             'userId' => $request['userId'],
             'sold' => $request['sold'],
             'picture' => $request['picture'],
-            'sold_to' => $request['sold_to']
+            'soldTo' => $request['soldTo']
         ]);
     }
 
