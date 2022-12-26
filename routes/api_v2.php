@@ -17,25 +17,4 @@ use App\Http\Controllers\Api\ItemController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-// USERS
-
-Route::post('/register', [AuthController::class, 'register']);
-
-Route::post('/login', [AuthController::class, 'login']);
-
-
-// ITEMS
-
-Route::post('/items', [ItemController::class, 'store']);
-
-Route::get('/items', [ItemController::class, 'index']);
-
-Route::put('/items/{id}', [ItemController::class, 'update']);
-
-Route::get('/items/{id}', [ItemController::class, 'fetchOtherItems']);
-
+Route::get('/items/{id}', [ItemController::class, 'myListings']);
