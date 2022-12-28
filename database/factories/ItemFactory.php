@@ -20,9 +20,10 @@ class ItemFactory extends Factory
         return [
             'name' => fake('en_US')->words(2, true),
             'details'=>fake()->sentence(),
+            'price' => fake()->randomFloat(2, 2, 20000),
             'userId' => User::inRandomOrder()->first(),
             'sold' => 'Available',
-            'picture' => '/assets/pics',
+            'picture' => fake()->imageUrl(360, 360, 'things', true, 'phone', true),
         ];
     }
 }

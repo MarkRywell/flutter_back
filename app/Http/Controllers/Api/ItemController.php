@@ -48,6 +48,7 @@ class ItemController extends Controller
         $item = Item::create([
             'name' => $request['name'],
             'details' => $request['details'],
+            'price' => $request['price'],
             'userId' => $request['userId'],
             'sold' => $request['sold'],
             'picture' => $request['picture'],
@@ -90,6 +91,7 @@ class ItemController extends Controller
         ->update([
             'name' => $request['name'],
             'details' => $request['details'],
+            'price' => $request['price'],
             'userId' => $request['userId'],
             'sold' => $request['sold'],
             'picture' => $request['picture'],
