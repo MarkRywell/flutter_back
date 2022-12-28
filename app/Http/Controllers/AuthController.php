@@ -21,6 +21,7 @@ class AuthController extends Controller
 
         $request->validate([
             'name' => 'required|string',
+            'contactNo' => 'required|string|min:10',
             'address' => 'required|string',
             'email' => 'required|string|unique:users',
             'password' => 'required|string|min:6',
@@ -28,6 +29,7 @@ class AuthController extends Controller
 
         $user = new User([
             'name' => $request->name,
+            'contactNo' => $request->contactNo,
             'address' => $request->address,
             'email' => $request->email,
             'password' => Hash::make($request->password)

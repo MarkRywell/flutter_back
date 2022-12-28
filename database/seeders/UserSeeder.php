@@ -18,18 +18,21 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'name' => 'Mark Gaje',
+                'contactNo' => '09265567313',
                 'address' => 'Cagayan de Oro City',
                 'email' => 'markgaje43@gmail.com',
                 'password' => bcrypt('mark123')
             ],
             [
                 'name' => 'Mark Bontia',
+                'contactNo' => '09001112222',
                 'address' => 'Gingoog Misamis Oriental',
                 'email' => 'markB@gmail.com',
                 'password' => bcrypt('mark123')
             ],
             [
                 'name' => 'John Ray Canete',
+                'contactNo' => '09112223333',
                 'address' => 'General Santos City',
                 'email' => 'janri@gmail.com',
                 'password' => bcrypt('janri123')
