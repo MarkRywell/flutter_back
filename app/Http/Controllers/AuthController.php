@@ -7,6 +7,7 @@ use Illuminate\support\Facades\Auth;
 use Illuminate\support\Facades\Hash;
 use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -18,34 +19,45 @@ class AuthController extends Controller
             'message' => '',
             'data' => null
         ];
-
-        $request->validate([
+        
+        
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'contactNo' => 'required|string|min:10',
             'address' => 'required|string',
             'email' => 'required|string|unique:users',
             'password' => 'required|string|min:6',
         ]);
+        
+        if ($validator->fails()) {
+            $responseData['message'] = $validator->errors()->first();
+            
+            return response()->json($responseData, 400);
+        }
 
-        $user = new User([
-            'name' => $request->name,
-            'contactNo' => $request->contactNo,
-            'address' => $request->address,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
+        // if ($validator->fails()) {
+            // $responseData['message'] = $validator->errors()->first();
+            // return response($responseData, 400);
+        // }
+
+        $user = User::create([
+            'name' => $request['name'],
+            'contactNo' => $request['contactNo'],
+            'address' => $request['address'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password'])
         ]);
 
         if ($user == null)
         {   
             $responseData['message'] = 'Unsuccessful Registration';
-            return response($responseData, 400);
+            return response()->json($responseData, 400);
         }
-
-        $user->save();
         
         $responseData['status'] = 'success';
         $responseData['message'] = 'Successful Registration';
-        return response($responseData, 201);
+
+        return response()->json($responseData, 201);
     }
 
     public function login(Request $request)
