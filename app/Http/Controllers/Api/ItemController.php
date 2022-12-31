@@ -23,7 +23,10 @@ class ItemController extends Controller
 
     public function fetchOtherItems(int $id)
     {
-        return (DB::table('items')->whereNot('userId', $id)->get());
+        return (DB::table('items')
+        ->whereNot('userId', $id)
+        ->where('sold', 'Available')
+        ->get());
     }
 
     public function myListings(int $id)
@@ -36,6 +39,33 @@ class ItemController extends Controller
         $name = DB::table('users')->where('id', $id)->select('name')->get();
         
         return $name[0];
+    }
+
+    public function purchase(int $id, Request $request)
+    {
+        $responseData = [
+            'status' => 'fail',
+            'message' => '',
+            'data' => null
+        ];
+        
+        $response = DB::table('items')
+        ->where('id', $id)
+        ->update([
+            'soldTo' => $request['soldTo'],
+            'sold' => $request['sold']
+        ]);
+
+        if($response != null)
+        {
+            $responseData['status'] = 'success';
+            $responseData['message'] = 'Purchase Successful';
+
+            return response()->json($responseData, 200);
+        }
+        
+        $responseData['message'] = 'Purchase Unsuccessful';
+        return response()->json($responseData, 400);
     }
 
     /**
@@ -93,6 +123,13 @@ class ItemController extends Controller
      */
     public function update(int $id, Request $request)
     {
+
+        $responseData = [
+            'status' => 'fail',
+            'message' => '',
+            'data' => null
+        ];
+
         $response = DB::table('items')
         ->where('id', $id)
         ->update([
@@ -104,6 +141,16 @@ class ItemController extends Controller
             'picture' => $request['picture'],
             'soldTo' => $request['soldTo']
         ]);
+
+        if($response != null)
+        {
+            $responseData['status'] = 'success';
+            $responseData['message'] = 'Update Successful';
+            return response()->json($responseData, 200);
+        }
+        
+        $responseData['message'] = 'Update Unsuccessful';
+        return $responseData;
     }
 
     /**

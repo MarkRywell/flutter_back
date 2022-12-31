@@ -18,3 +18,5 @@ use App\Http\Controllers\Api\ItemController;
 */
 
 Route::get('/items/{id}', [ItemController::class, 'myListings']);
+
+Route::put('item/{id}', [ItemController::class, 'purchase']);
