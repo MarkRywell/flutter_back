@@ -39,3 +39,5 @@ Route::put('/items/{id}', [ItemController::class, 'update']);
 
 Route::get('/items/{id}', [ItemController::class, 'fetchOtherItems']);
 
+Route::get('/item/{id}', [ItemController::class, 'fetchItemSeller']);
+

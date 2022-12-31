@@ -31,6 +31,13 @@ class ItemController extends Controller
         return ItemResource::collection(DB::table('items')->where('userId', $id)->get());
     }
 
+    public function fetchItemSeller(int $id)
+    {
+        $name = DB::table('users')->where('id', $id)->select('name')->get();
+        
+        return $name[0];
+    }
+
     /**
      * Store a newly created resource in storage.
      *
