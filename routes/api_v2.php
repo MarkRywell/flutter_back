@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\ItemController;
 |
 */
 
-Route::get('/items/{id}', [ItemController::class, 'myListings']);
+Route::get('/items/{id}', [ItemController::class, 'myListings']); //Fetch items of user
 
-Route::put('item/{id}', [ItemController::class, 'purchase']);
+Route::put('item/{id}', [ItemController::class, 'purchase']); //Purchase item
+

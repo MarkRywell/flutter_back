@@ -23,7 +23,7 @@ class ItemController extends Controller
 
     public function fetchOtherItems(int $id)
     {
-        return (DB::table('items')
+        return ItemResource::collection(DB::table('items')
         ->whereNot('userId', $id)
         ->where('sold', 'Available')
         ->get());
@@ -74,6 +74,12 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function fetchPicture($picture)
+    {   
+       return response()->file(storage_path("app/public/uploads/$picture"));
+    }
+
     public function store(Request $request)
     {   
         $responseData = [
@@ -82,13 +88,17 @@ class ItemController extends Controller
             'data' => null
         ];
 
+        $file_path = $request['picture']->store('public/uploads');
+
+        $file_name = str_replace("public/uploads/", "", $file_path);
+        
         $item = Item::create([
             'name' => $request['name'],
             'details' => $request['details'],
             'price' => $request['price'],
             'userId' => $request['userId'],
             'sold' => $request['sold'],
-            'picture' => $request['picture'],
+            'picture' => $file_name
         ]);
         
         if ($item == null)
@@ -159,8 +169,24 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy(int $id)
     {
-        //
+        $responseData = [
+            'status' => 'fail',
+            'message' => '',
+            'data' => null
+        ];
+
+        $response = DB::table('items')->where('id', $id)->delete();
+
+        if($response == 0){
+            $responseData['message'] = 'Delete Unsuccessful';
+            return response()->json($responseData, 200);
+        }
+        
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Item Deleted';
+
+        return response()->json($responseData, 200);
     }
 }

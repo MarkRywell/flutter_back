@@ -24,20 +24,27 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // USERS
 
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register']); //User registration
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']); //User login
 
 
 // ITEMS
 
-Route::post('/items', [ItemController::class, 'store']);
+Route::get('/items', [ItemController::class, 'index']); //Fetch all items
 
-Route::get('/items', [ItemController::class, 'index']);
+Route::get('/items/{id}', [ItemController::class, 'fetchOtherItems']); //Fetch items from other users
 
-Route::put('/items/{id}', [ItemController::class, 'update']);
+Route::get('/item/{id}', [ItemController::class, 'fetchItemSeller']); //Fetch name of item seller
 
-Route::get('/items/{id}', [ItemController::class, 'fetchOtherItems']);
+Route::get('/picture/{picture}', [ItemController::class, 'fetchPicture']); //Fetch picture of the item
 
-Route::get('/item/{id}', [ItemController::class, 'fetchItemSeller']);
+Route::post('/items', [ItemController::class, 'store']); //Store item
+
+Route::delete('/items/{id}', [ItemController::class, 'destroy']); //Delete item
+
+Route::put('/items/{id}', [ItemController::class, 'update']); //Update item
+
+
+
 
