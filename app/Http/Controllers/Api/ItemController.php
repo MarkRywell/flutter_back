@@ -8,6 +8,7 @@ use App\Http\Resources\ItemResource;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -31,14 +32,41 @@ class ItemController extends Controller
 
     public function myListings(int $id)
     {
-        return ItemResource::collection(DB::table('items')->where('userId', $id)->get());
+        return ItemResource::collection(DB::table('items')
+        ->whereNot('sold', 'Removed')
+        ->where('userId', $id,)
+        ->get());
     }
 
     public function fetchItemSeller(int $id)
     {
-        $name = DB::table('users')->where('id', $id)->select('name')->get();
+        $name = DB::table('users')->where('id', $id)->select('name', 'address')->get();
         
         return $name[0];
+    }
+
+    public function remove(int $id) 
+    {
+        $responseData = [
+            'status' => 'fail',
+            'message' => '',
+            'data' => null
+        ];
+
+        $response = DB::table('items')
+        ->where('id', $id)
+        ->update(['sold' => 'Removed']);
+        
+        if($response != null)
+        {
+            $responseData['status'] = 'success';
+            $responseData['message'] = 'Item Removed';
+            return response()->json($responseData, 200);
+        }
+        
+        $responseData['message'] = 'Item Remove Unsuccessful';
+        return response()->json($responseData, 400);
+
     }
 
     public function purchase(int $id, Request $request)
@@ -176,8 +204,11 @@ class ItemController extends Controller
             'message' => '',
             'data' => null
         ];
-
+        
+        $picture = DB::table('items')->where('id', $id)->select('picture')->get();
         $response = DB::table('items')->where('id', $id)->delete();
+        
+        echo $picture;
 
         if($response == 0){
             $responseData['message'] = 'Delete Unsuccessful';
@@ -186,6 +217,12 @@ class ItemController extends Controller
         
         $responseData['status'] = 'success';
         $responseData['message'] = 'Item Deleted';
+
+        if(Storage::disk('public')->exists('uploads/' . $picture))
+        {   
+            echo "WTF";
+            Storage::disk('public')->delete('uploads' . $picture);
+        }
 
         return response()->json($responseData, 200);
     }

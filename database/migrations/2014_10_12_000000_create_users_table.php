@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('contactNo');
             $table->string('address');
+            $table->string('picture')->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();

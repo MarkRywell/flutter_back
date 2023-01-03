@@ -7,6 +7,7 @@ use App\Models\User;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -17,29 +18,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return User::select('name', 'contactNo', 'address', 'email')->get();
     }
-
-    public function login(Request $request) {
-        
-        // $validator = Validator::make($request->all(), [
-            // 'email' => 'required | email',
-            // 'password' => 'required | string'
-        // ]);
-
-        // if ($validator->fails()) {
-            // 
-            // return response(400);
-        // }
-
-        // $user = User::where('email', $request->email)->first();
-
-        // if (!$user || !Hash::check($request->password, $user->password)) {
-
-            // return response(400);
-        // }
-    }
-
 
 
     /**
@@ -71,9 +51,57 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function addPicture(int $id, Request $request)
     {
-        //
+        $responseData = [
+            'status' => 'fail',
+            'message' => '',
+            'data' => null
+        ];
+
+        $response = DB::table('users')
+        ->where('id', $id)
+        ->update([
+            'picture' => $request['picture']
+        ]);
+
+        if($response != null)
+        {
+            $responseData['status'] = 'success';
+            $responseData['message'] = 'Profile Photo Added';
+            return response()->json($responseData, 200);
+        }
+        
+        $responseData['message'] = 'Photo Upload Unsuccessful';
+        return $responseData;
+    }
+
+    public function update(int $id, Request $request)
+    {
+        $responseData = [
+            'status' => 'fail',
+            'message' => '',
+            'data' => null
+        ];
+
+        $response = DB::table('users')
+        ->where('id', $id)
+        ->update([
+            'name' => $request['name'],
+            'contactNo' => $request['contactNo'],
+            'address' => $request['address'],
+            'picture' => $request['picture'],
+        ]);
+
+        if($response != null)
+        {
+            $responseData['status'] = 'success';
+            $responseData['message'] = 'Update Successful';
+            return response()->json($responseData, 200);
+        }
+        
+        $responseData['message'] = 'Update Unsuccessful';
+        return $responseData;
     }
 
     /**

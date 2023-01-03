@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\ItemController;
+use App\Http\Controllers\Api\UserController;
 
 
 /*
@@ -28,6 +29,8 @@ Route::post('/register', [AuthController::class, 'register']); //User registrati
 
 Route::post('/login', [AuthController::class, 'login']); //User login
 
+Route::get('/users', [UserController::class, 'index']); //Fetch all users
+
 
 // ITEMS
 
@@ -44,6 +47,8 @@ Route::post('/items', [ItemController::class, 'store']); //Store item
 Route::delete('/items/{id}', [ItemController::class, 'destroy']); //Delete item
 
 Route::put('/items/{id}', [ItemController::class, 'update']); //Update item
+
+Route::patch('/item/{id}', [ItemController::class, 'remove']); //Remove item from myListings
 
 
 
