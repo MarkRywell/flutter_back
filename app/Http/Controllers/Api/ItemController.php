@@ -116,6 +116,7 @@ class ItemController extends Controller
             'data' => null
         ];
 
+
         $file_path = $request['picture']->store('public/uploads');
 
         $file_name = str_replace("public/uploads/", "", $file_path);
@@ -176,8 +177,33 @@ class ItemController extends Controller
             'price' => $request['price'],
             'userId' => $request['userId'],
             'sold' => $request['sold'],
-            'picture' => $request['picture'],
-            'soldTo' => $request['soldTo']
+        ]); 
+
+        if($response != null)
+        {
+            $responseData['status'] = 'success';
+            $responseData['message'] = 'Update Successful';
+            return response()->json($responseData, 200);
+        }
+        
+        $responseData['message'] = 'Update Unsuccessful';
+        return $responseData;
+    }
+
+    public function updatePicture(int $id, Request $request) {
+        $responseData = [
+            'status' => 'fail',
+            'message' => '',
+            'data' => null
+        ];
+
+        $file_path = $request['picture']->store('public/uploads');
+        $file_name = str_replace("public/uploads/", "", $file_path);
+
+        $response = DB::table('items')
+        ->where('id', $id)
+        ->update([
+            'picture' => $file_name
         ]);
 
         if($response != null)

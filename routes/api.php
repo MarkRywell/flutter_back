@@ -42,6 +42,8 @@ Route::get('/item/{id}', [ItemController::class, 'fetchItemSeller']); //Fetch na
 
 Route::get('/picture/{picture}', [ItemController::class, 'fetchPicture']); //Fetch picture of the item
 
+Route::post('/picture/{id}', [ItemController::class, 'updatePicture']);
+
 Route::post('/items', [ItemController::class, 'store']); //Store item
 
 Route::delete('/items/{id}', [ItemController::class, 'destroy']); //Delete item
