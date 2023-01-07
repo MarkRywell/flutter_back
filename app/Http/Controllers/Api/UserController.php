@@ -59,10 +59,14 @@ class UserController extends Controller
             'data' => null
         ];
 
+        $file_path = $request['picture']->store('public/uploads');
+        $file_name = str("public/uploads/", "", $file_path);
+
+
         $response = DB::table('users')
         ->where('id', $id)
         ->update([
-            'picture' => $request['picture']
+            'picture' => $file_name
         ]);
 
         if($response != null)

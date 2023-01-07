@@ -31,6 +31,8 @@ Route::post('/login', [AuthController::class, 'login']); //User login
 
 Route::get('/users', [UserController::class, 'index']); //Fetch all users
 
+Route::post('/users/picture/{picture}', [UserController::class, 'addPicture']); //Add Photo 
+
 
 // ITEMS
 
@@ -42,7 +44,7 @@ Route::get('/item/{id}', [ItemController::class, 'fetchItemSeller']); //Fetch na
 
 Route::get('/picture/{picture}', [ItemController::class, 'fetchPicture']); //Fetch picture of the item
 
-Route::post('/picture/{id}', [ItemController::class, 'updatePicture']);
+Route::post('/picture/{id}', [ItemController::class, 'updatePicture']); //Update Picture of item
 
 Route::post('/items', [ItemController::class, 'store']); //Store item
 
