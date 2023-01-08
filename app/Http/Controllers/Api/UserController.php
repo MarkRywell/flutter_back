@@ -21,7 +21,6 @@ class UserController extends Controller
         return User::select('id', 'name', 'contactNo', 'picture','address', 'email')->get();
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -73,6 +72,7 @@ class UserController extends Controller
         {
             $responseData['status'] = 'success';
             $responseData['message'] = 'Profile Photo Added';
+            $responseData['data'] = $file_name;
             return response()->json($responseData, 200);
         }
         

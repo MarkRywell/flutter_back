@@ -45,6 +45,13 @@ class ItemController extends Controller
         return $name[0];
     }
 
+    public function myPurchases(string $name)
+    {
+        return ItemResource::collection(DB::table('items')
+        ->where('soldTo', $name)
+        ->get());
+    }
+
     public function remove(int $id) 
     {
         $responseData = [

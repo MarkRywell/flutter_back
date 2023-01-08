@@ -33,6 +33,8 @@ Route::get('/users', [UserController::class, 'index']); //Fetch all users
 
 Route::post('/users/picture/{picture}', [UserController::class, 'addPicture']); //Add Photo 
 
+Route::get('/myPurchases/{name}', [ItemController::class, 'myPurchases']);
+
 
 // ITEMS
 
