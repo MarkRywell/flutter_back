@@ -60,7 +60,7 @@ class UserController extends Controller
         ];
 
         $file_path = $request['picture']->store('public/uploads');
-        $file_name = str("public/uploads/", "", $file_path);
+        $file_name = str_replace("public/uploads/", "", $file_path);
 
 
         $response = DB::table('users')
